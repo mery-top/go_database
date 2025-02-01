@@ -1,4 +1,4 @@
-package main
+package bplustree
 
 import "fmt"
 
@@ -15,7 +15,7 @@ type BPlusTree struct {
 	t    int
 }
 
-func newNode(t int, isLeaf bool) *BPlusTreeNode {
+func NewNode(t int, isLeaf bool) *BPlusTreeNode {
 	return &BPlusTreeNode{
 		t:        t,
 		keys:     []int{},
@@ -26,17 +26,17 @@ func newNode(t int, isLeaf bool) *BPlusTreeNode {
 }
 
 func newBPlusTree(t int) *BPlusTree {
-	root := newNode(t, true)
+	root := NewNode(t, true)
 	return &BPlusTree{root: root, t: t}
 }
 
 func (tree *BPlusTree) Insert(key int) {
 	if tree.root == nil {
-		tree.root = newNode(tree.t, true)
+		tree.root = NewNode(tree.t, true)
 	}
 	root := tree.root
 	if len(root.keys) == 2*tree.t-1 {
-		newRoot := newNode(tree.t, false)
+		newRoot := NewNode(tree.t, false)
 		newRoot.children = append(newRoot.children, root)
 		tree.splitChild(newRoot, 0)
 		tree.root = newRoot
@@ -72,7 +72,7 @@ func (tree *BPlusTree) insertNonFull(node *BPlusTreeNode, key int) {
 func (tree *BPlusTree) splitChild(parent *BPlusTreeNode, index int) {
 	t := tree.t
 	child := parent.children[index]
-	newChild := newNode(t, child.isLeaf)
+	newChild := NewNode(t, child.isLeaf)
 
 	mid := t - 1
 	// Split the parent node keys and children
@@ -107,14 +107,3 @@ func (tree *BPlusTree) Traverse() {
 	}
 }
 
-func main() {
-	t := 3
-	tree := newBPlusTree(t)
-
-	keys := []int{10, 20, 5, 6, 12, 30, 7, 17}
-	for _, key := range keys {
-		tree.Insert(key)
-	}
-	fmt.Println("B+ Tree Traversal")
-	tree.Traverse()
-}
