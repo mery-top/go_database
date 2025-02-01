@@ -25,7 +25,7 @@ func NewNode(t int, isLeaf bool) *BPlusTreeNode {
 	}
 }
 
-func newBPlusTree(t int) *BPlusTree {
+func NewBPlusTree(t int) *BPlusTree {
 	root := NewNode(t, true)
 	return &BPlusTree{root: root, t: t}
 }
