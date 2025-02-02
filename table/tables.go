@@ -1,5 +1,5 @@
 package main
-
+// Tables with queries
 import (
 	"go-db/bplustree"
 	"fmt"
